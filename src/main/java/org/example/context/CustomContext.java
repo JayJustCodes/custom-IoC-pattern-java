@@ -8,11 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 
-public class CustomContext {
+public class CustomContext implements ICustomContext {
     private Map<String, Data> beans;
+
     public CustomContext(String configPath) {
         init(configPath);
+    }
 
+    @Override
+    public <T> T getBean(String paramName) {
+        Data data = beans.get(paramName);
+        return (T) data.instance;
+    }
+    
+    @Override
+    public <T> T getBean(String paramName, Class<T> tClass) {
+        return tClass.cast(beans.get(paramName).instance);
     }
 
     private void init(String configPath) {
