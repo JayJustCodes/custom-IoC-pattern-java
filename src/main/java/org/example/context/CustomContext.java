@@ -3,6 +3,7 @@ package org.example.context;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class CustomContext implements ICustomContext {
         Data data = beans.get(paramName);
         return (T) data.instance;
     }
-    
+
     @Override
     public <T> T getBean(String paramName, Class<T> tClass) {
         return tClass.cast(beans.get(paramName).instance);
@@ -29,7 +30,7 @@ public class CustomContext implements ICustomContext {
     private void init(String configPath) {
         beans = new HashMap<>();
 
-        Path path  = Path.of(configPath);
+        Path path  = Paths.get(configPath);
 
         try {
             List<String> lines = Files.readAllLines(path);
